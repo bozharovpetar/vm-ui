@@ -1,1 +1,44 @@
-<p>coffee works!</p>
+<body>
+    <div class="container card-div">
+        <div class="row">
+            <div class="col-3" *ngFor="let item of coffeeItems">
+                <mat-card class="card">
+                    <mat-card-title>
+                        {{item.Title}}
+                    </mat-card-title>
+                    <mat-card-content>
+                        <!-- Insert content here: -->
+                        <!-- Ingredients -->
+                        <!-- Price -->
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <!-- Pick said coffee -->
+                        <button mat-raised-button color="accent" (click)="selectItem(item)">PICK</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+
+    <!-- Selected coffee -->
+    <div class="row selection">
+        <div class="col-4 offset-md-4">
+            <div *ngIf="selection">
+                <mat-card class="card">
+                    <mat-card-title>
+                        SELECTION
+                    </mat-card-title>
+                    <mat-card-content>
+                        <span>You have selected: {{selection.Title}}</span>
+                        <br>
+                        <span>Price: {{selection.Price}}</span>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <!-- Order said coffee -->
+                        <button mat-raised-button color="accent" (click)="orderCoffee()">ORDER</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</body>

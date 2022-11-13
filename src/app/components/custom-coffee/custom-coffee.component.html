@@ -1,1 +1,45 @@
-<p>custom-coffee works!</p>
+<body>
+    <div class="container card-div">
+        <div class="row">
+            <div class="col-3" *ngFor="let item of ingredients">
+                <mat-card class="card">
+                    <mat-card-title>
+                        {{item.Title}}
+                    </mat-card-title>
+                    <mat-card-content>
+                        <!-- Insert content here: -->
+                        <!-- Left in stock -->
+                        {{item.LeftInStock}}
+                        <!-- Price -->
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <!-- Pick said coffee -->
+                        <button [disabled]="item.LeftInStock == 0" mat-raised-button color="accent" (click)="selectItem(item)">PICK</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+
+    <!-- Selected coffee -->
+    <div class="row selection">
+        <div class="col-4 offset-md-4">
+            <div *ngIf="selection.length > 0">
+                <mat-card class="card">
+                    <mat-card-title>
+                        SELECTION
+                    </mat-card-title>
+                    <mat-card-content>
+                        <span>You have selected: {{printSelection()}}</span>
+                        <br>
+                        <span>Price: {{totalPrice}}</span>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <!-- Order said coffee -->
+                        <button mat-raised-button color="accent" (click)="orderCustomCoffee()">ORDER</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</body>

@@ -11,7 +11,7 @@
                         <img src="../../../assets/images/pick-coffee-image.png" class="card-image">
                     </mat-card-content>
                     <mat-card-actions>
-                        <button mat-raised-button color="accent">PICK</button>
+                        <a mat-raised-button color="accent" [routerLink]="['/pick-coffee']">PICK</a>
                     </mat-card-actions>
                 </mat-card>
             </div>
@@ -26,7 +26,7 @@
                         <img src="../../../assets/images/create-custom-coffee-image.png" class="card-image">
                     </mat-card-content>
                     <mat-card-actions>
-                        <button mat-raised-button color="accent">CREATE</button>
+                        <button mat-raised-button color="accent" [routerLink]="['/create-custom-coffee']">CREATE</button>
                     </mat-card-actions>
                 </mat-card>
             </div>

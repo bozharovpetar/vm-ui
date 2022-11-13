@@ -7,12 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CoffeeComponent } from './components/coffee/coffee.component';
 import { CustomCoffeeComponent } from './components/custom-coffee/custom-coffee.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 // angular material components
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
-import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
     BrowserAnimationsModule,
     MatCardModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
