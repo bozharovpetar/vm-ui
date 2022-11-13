@@ -1,1 +1,29 @@
-<p>order-details works!</p>
+<body>
+    <div class="container card-div">
+        <div class="row">
+            <div class="col-4 offset-md-4">
+                <mat-card class="card">
+                    <mat-card-title>
+                        ORDER COMPLETED
+                    </mat-card-title>
+                    <mat-card-content>
+                        <!-- Insert content here: -->
+                        <span>ORDER DETAILS:</span>
+                        <hr>
+                        <span>{{order.Title}}</span>
+                        <div *ngIf="order.IsCustomCoffee">
+                            Custom ingredients:
+                            <ul>
+                                <li *ngFor="let ingredient of order.Ingredients">{{ingredient.Title}}</li>
+                            </ul>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <!-- Order another coffee -->
+                        <button mat-raised-button color="accent" [routerLink]="['/dashboard']">ORDER ANOTHER</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</body>

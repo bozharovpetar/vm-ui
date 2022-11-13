@@ -53,6 +53,12 @@ export class CustomCoffeeComponent implements OnInit {
   }
 
   resetSelection() {
+    this.selection.forEach(item => {
+      var ingredient = this.ingredients.find(x => x.Id == item.Id);
+      if(ingredient){
+        ingredient.LeftInStock += item.Quantity;
+      }
+    });
     this.selection = [];
   }
 

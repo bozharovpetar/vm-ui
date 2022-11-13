@@ -23,3 +23,9 @@ body {
 .selection {
     margin-top: 20px;
 }
+
+.back-button{
+    width: 50px;
+    margin-left: 2%;
+    margin-top: 2%;
+}
