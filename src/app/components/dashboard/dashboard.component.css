@@ -1,0 +1,17 @@
+body {
+    background: url("../../../assets/images/dashbord-background.jpeg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.card-div {
+    padding-top: 20%;
+}
+
+.card-image{
+    height: 100px;
+    width: 100px;
+}
+
+.card {
+    text-align: center;
+}
