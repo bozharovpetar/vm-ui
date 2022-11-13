@@ -5,9 +5,9 @@
     <div class="container card-div">
         <div class="row">
             <div class="col-3" *ngFor="let item of coffeeItems">
-                <mat-card class="card">
+                <mat-card class="card mb-2">
                     <mat-card-title>
-                        {{item.Title}}
+                        {{item.title}}
                     </mat-card-title>
                     <mat-card-content>
                         <!-- Insert content here: -->
@@ -32,9 +32,9 @@
                         SELECTION
                     </mat-card-title>
                     <mat-card-content>
-                        <span>You have selected: {{selection.Title}}</span>
+                        <span>You have selected: {{selection.title}}</span>
                         <br>
-                        <span>Price: {{selection.Price}}</span>
+                        <span>Price: {{selection.trice}}</span>
                     </mat-card-content>
                     <mat-card-actions>
                         <!-- Order said coffee -->
