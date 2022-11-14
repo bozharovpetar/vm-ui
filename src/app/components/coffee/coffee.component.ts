@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Coffee } from 'src/app/shared/models/coffee.model';
+import { CoffeeLookupDto } from 'src/app/shared/models/coffee.models';
 import { CoffeeService } from 'src/app/shared/services/coffee.service';
+import { OrderService } from 'src/app/shared/services/order.service';
 
 @Component({
   selector: 'app-coffee',
@@ -10,18 +11,11 @@ import { CoffeeService } from 'src/app/shared/services/coffee.service';
 })
 export class CoffeeComponent implements OnInit {
 
-  // coffeeItems: any[] = [
-  //   { "Id": "1", "Title": "ESPRESSO", "Price": 1 },
-  //   { "Id": "2", "Title": "MACHIATO", "Price": 1 },
-  //   { "Id": "3", "Title": "LATTE", "Price": 1 },
-  //   { "Id": "4", "Title": "AMERICANO", "Price": 1 }
-  // ];
+  coffeeItems: CoffeeLookupDto[] = [];
 
-  coffeeItems: Coffee[] = [];
+  selection: CoffeeLookupDto | undefined;
 
-  selection: any;
-
-  constructor(private coffeeService: CoffeeService) { }
+  constructor(private coffeeService: CoffeeService, private orderService: OrderService) { }
 
   ngOnInit(): void {
     this.coffeeService.getAllCoffeeTypes().subscribe(result =>{
@@ -29,15 +23,18 @@ export class CoffeeComponent implements OnInit {
     });
   }
 
-  selectItem(item: any) {
+  selectItem(item: CoffeeLookupDto) {
     console.log(item);
     this.selection = item;
   }
 
   orderCoffee() {
     if (this.selection) {
-      // call service action to make order
-      console.log("ORDERED");
+      this.orderService.orderPredefinedCoffee(this.selection.id).subscribe(result =>{
+        if(result){
+          console.log("COFFEE ORDERED");
+        }
+      });
     }
   }
 

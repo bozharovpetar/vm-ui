@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Coffee } from '../models/coffee.model';
+import { CoffeeLookupDto } from '../models/coffee.models';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class CoffeeService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCoffeeTypes() : Observable<Coffee[]>{
-    return this.http.get<Coffee[]>(this.APIUrl + "/get-all");
+  getAllCoffeeTypes() : Observable<CoffeeLookupDto[]>{
+    return this.http.get<CoffeeLookupDto[]>(this.APIUrl + "/get-all");
   }
 }

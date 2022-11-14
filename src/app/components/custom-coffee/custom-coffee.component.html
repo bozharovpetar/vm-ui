@@ -7,17 +7,17 @@
             <div class="col-3" *ngFor="let item of ingredients">
                 <mat-card class="card">
                     <mat-card-title>
-                        {{item.Title}}
+                        {{item.title}}
                     </mat-card-title>
                     <mat-card-content>
                         <!-- Insert content here: -->
                         <!-- Left in stock -->
-                        {{item.LeftInStock}}
+                        {{item.leftInStock}}
                         <!-- Price -->
                     </mat-card-content>
                     <mat-card-actions>
                         <!-- Pick said coffee -->
-                        <button [disabled]="item.LeftInStock == 0" mat-raised-button color="accent" (click)="selectItem(item)">PICK</button>
+                        <button [disabled]="item.leftInStock == 0" mat-raised-button color="accent" (click)="selectItem(item)">PICK</button>
                     </mat-card-actions>
                 </mat-card>
             </div>

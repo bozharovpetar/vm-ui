@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AddIngredientDto, IngredientDto } from 'src/app/shared/models/ingredient.models';
+import { IngredientsService } from 'src/app/shared/services/ingredients.service';
+import { OrderService } from 'src/app/shared/services/order.service';
 
 @Component({
   selector: 'app-custom-coffee',
@@ -7,81 +10,82 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomCoffeeComponent implements OnInit {
 
-  ingredients: any[] = [
-    { "Id": "1", "Title": "MILK", "Price": 1, "LeftInStock": 4 },
-    { "Id": "2", "Title": "SUGAR", "Price": 1, "LeftInStock": 5 },
-    { "Id": "3", "Title": "ESPRESSO SHOT", "Price": 1, "LeftInStock": 6 },
-    { "Id": "4", "Title": "WATER", "Price": 1, "LeftInStock": 7 }
-  ];
+  ingredients: IngredientDto[] = [];
 
-  selection: any[] = [];
+  selection: AddIngredientDto[] = [];
   totalPrice: number = 0;
 
-  constructor() { }
+  constructor(private ingredientService: IngredientsService, private orderService: OrderService) { }
 
   ngOnInit(): void {
+    this.ingredientService.getAllIngredients().subscribe(result=>{
+      this.ingredients = result;
+    });
   }
 
-  selectItem(item: any) {
+  selectItem(item: IngredientDto) {
     console.log(item);
-    var ingredient = this.ingredients.find(x => x.Id == item.Id);
+    var ingredient = this.ingredients.find(x => x.id == item.id);
 
-    if (!this.selection.some(x => x.Id == item.Id)) {
-      if (ingredient && ingredient.LeftInStock > 0) {
-        this.selection.push({
-          "Id": item.Id,
-          "Title": item.Title,
-          "Price": item.Price,
-          "Quantity": 1
-        });
-        ingredient.LeftInStock--;
+    if(ingredient){
+      if (!this.selection.some(x => x.id == item.id)) {
+        if (ingredient && ingredient.leftInStock > 0) {
+          this.selection.push(new AddIngredientDto(ingredient.id, 1));
+          ingredient.leftInStock--;
+        }
+      } else {
+        var entry = this.selection.find(x => x.id == item.id);
+  
+        if (entry) {
+          if (ingredient && ingredient.leftInStock > 0) {
+            entry.quantity++;
+            ingredient.leftInStock--;
+          }
+        }
       }
-    } else {
-      var entry = this.selection.find(x => x.Id == item.Id);
-
-      if (ingredient && ingredient.LeftInStock > 0) {
-        entry.Quantity++;
-        ingredient.LeftInStock--;
-      }
+  
+      this.totalPrice = 0;
+  
+      this.selection.forEach(element => {
+        this.totalPrice += ingredient!.price * element.quantity;
+      });
     }
-
-    this.totalPrice = 0;
-
-    this.selection.forEach(element => {
-      this.totalPrice += element.Price * element.Quantity;
-    });
   }
 
   resetSelection() {
     this.selection.forEach(item => {
-      var ingredient = this.ingredients.find(x => x.Id == item.Id);
-      if(ingredient){
-        ingredient.LeftInStock += item.Quantity;
+      var ingredient = this.ingredients.find(x => x.id == item.id);
+      if (ingredient) {
+        ingredient.leftInStock += item.quantity;
       }
     });
     this.selection = [];
   }
 
-  removeItem(item: any) {
-    if (this.selection.some(x => x.Id == item.Id)) {
-      var entry = this.selection.find(x => x.Id == item.Id);
-      var ingredient = this.ingredients.find(x => x.Id == item.Id);
+  removeItem(item: AddIngredientDto) {
+    if (this.selection.some(x => x.id == item.id)) {
+      var entry = this.selection.find(x => x.id == item.id);
+      var ingredient = this.ingredients.find(x => x.id == item.id);
 
-      if (ingredient && entry.Quantity > 0) {
-        entry.Quantity--;
-        ingredient.LeftInStock++;
+      if (ingredient && entry!.quantity > 0) {
+        entry!.quantity--;
+        ingredient.leftInStock++;
       }
     }
   }
 
   orderCustomCoffee() {
-    console.log(this.selection);
+    this.orderService.orderCustomCoffee(this.selection).subscribe(result =>{
+      if(result){
+        console.log("CUSTOM COFFEE ORDERED");
+      }
+    });
   }
 
   printSelection() {
     var result = "";
     this.selection.forEach(item => {
-      result += item.Title + ' x' + item.Quantity + " ";
+      result += this.ingredients.find(x => x.id == item.id)?.title + ' x' + item.quantity + " ";
     });
     return result;
   }
