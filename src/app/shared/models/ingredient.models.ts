@@ -15,3 +15,11 @@ export class IngredientDto {
     public price: number = 0;
     public measurementUnit: string = "";
 }
+
+export class OrderIngredientDto {
+    public id: string = "";
+    public title: string = "";
+    public price: number = 0;
+    public quantity: number = 0;
+    public measurementUnit: string = "";
+}

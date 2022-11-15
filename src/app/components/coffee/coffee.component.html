@@ -24,7 +24,7 @@
     </div>
 
     <!-- Selected coffee -->
-    <div class="row selection">
+    <div *ngIf="!errorMessage" class="row selection">
         <div class="col-4 offset-md-4">
             <div *ngIf="selection">
                 <mat-card class="card">
@@ -40,6 +40,22 @@
                         <!-- Order said coffee -->
                         <button mat-raised-button color="accent" (click)="orderCoffee()">ORDER</button>
                     </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="row selection">
+        <div class="col-4 offset-md-4">
+            <div>
+                <mat-card class="card">
+                    <mat-card-title>
+                        ORDER CAN NOT BE COMPLETED
+                    </mat-card-title>
+                    <mat-card-content>
+                        <span>{{errorMessage}}</span>
+                    </mat-card-content>
                 </mat-card>
             </div>
         </div>

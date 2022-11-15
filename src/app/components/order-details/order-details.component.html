@@ -8,19 +8,29 @@
                     </mat-card-title>
                     <mat-card-content>
                         <!-- Insert content here: -->
-                        <span>ORDER DETAILS:</span>
                         <hr>
-                        <span>{{order.Title}}</span>
-                        <div *ngIf="order.IsCustomCoffee">
-                            Custom ingredients:
+                        <span>ORDER DETAILS:</span>
+                        <br><br>
+                        <span><b>Date of order:</b> {{order.date | date:'short'}}</span>
+                        <div>
+                            <b>Ingredients:</b>
                             <ul>
-                                <li *ngFor="let ingredient of order.Ingredients">{{ingredient.Title}}</li>
+                                <li *ngFor="let ingredient of order.ingredients">{{ingredient.title}} - {{ingredient.quantity}} {{ingredient.measurementUnit}}</li>
                             </ul>
                         </div>
+                        <span><b>Price:</b> {{order.price}}</span>
+                        <hr>
+                        <span>Thank you for ordering.</span>
                     </mat-card-content>
                     <mat-card-actions>
                         <!-- Order another coffee -->
-                        <button mat-raised-button color="accent" [routerLink]="['/dashboard']">ORDER ANOTHER</button>
+                        <div class="row">
+                            <div class="col-4 offset-4">
+                                <button mat-raised-button color="accent" [routerLink]="['/dashboard']">
+                                    ORDER ANOTHER
+                                </button>
+                            </div>
+                        </div>
                     </mat-card-actions>
                 </mat-card>
             </div>

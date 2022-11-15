@@ -8,7 +8,7 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
 const routes: Routes = [
   { path: 'pick-coffee', component: CoffeeComponent },
   { path: 'create-custom-coffee', component: CustomCoffeeComponent },
-  { path: 'order/:orderId', component: OrderDetailsComponent },
+  { path: 'order/:id', component: OrderDetailsComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: '**', component: DashboardComponent },
 ];

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Guid } from 'guid-string';
 import { AddIngredientDto, IngredientDto } from 'src/app/shared/models/ingredient.models';
 import { IngredientsService } from 'src/app/shared/services/ingredients.service';
 import { OrderService } from 'src/app/shared/services/order.service';
@@ -14,20 +16,21 @@ export class CustomCoffeeComponent implements OnInit {
 
   selection: AddIngredientDto[] = [];
   totalPrice: number = 0;
+  errorMessage: string = "";
 
-  constructor(private ingredientService: IngredientsService, private orderService: OrderService) { }
+  constructor(private ingredientService: IngredientsService, private orderService: OrderService, private router: Router) { }
 
   ngOnInit(): void {
-    this.ingredientService.getAllIngredients().subscribe(result=>{
+    this.ingredientService.getAllIngredients().subscribe(result => {
       this.ingredients = result;
     });
   }
 
   selectItem(item: IngredientDto) {
-    console.log(item);
     var ingredient = this.ingredients.find(x => x.id == item.id);
 
-    if(ingredient){
+    if (ingredient) {
+      this.errorMessage = "";
       if (!this.selection.some(x => x.id == item.id)) {
         if (ingredient && ingredient.leftInStock > 0) {
           this.selection.push(new AddIngredientDto(ingredient.id, 1));
@@ -35,7 +38,7 @@ export class CustomCoffeeComponent implements OnInit {
         }
       } else {
         var entry = this.selection.find(x => x.id == item.id);
-  
+
         if (entry) {
           if (ingredient && ingredient.leftInStock > 0) {
             entry.quantity++;
@@ -43,9 +46,9 @@ export class CustomCoffeeComponent implements OnInit {
           }
         }
       }
-  
+
       this.totalPrice = 0;
-  
+
       this.selection.forEach(element => {
         this.totalPrice += ingredient!.price * element.quantity;
       });
@@ -60,24 +63,15 @@ export class CustomCoffeeComponent implements OnInit {
       }
     });
     this.selection = [];
-  }
-
-  removeItem(item: AddIngredientDto) {
-    if (this.selection.some(x => x.id == item.id)) {
-      var entry = this.selection.find(x => x.id == item.id);
-      var ingredient = this.ingredients.find(x => x.id == item.id);
-
-      if (ingredient && entry!.quantity > 0) {
-        entry!.quantity--;
-        ingredient.leftInStock++;
-      }
-    }
+    this.errorMessage = "";
   }
 
   orderCustomCoffee() {
-    this.orderService.orderCustomCoffee(this.selection).subscribe(result =>{
-      if(result){
-        console.log("CUSTOM COFFEE ORDERED");
+    this.orderService.orderCustomCoffee(this.selection).subscribe(result => {
+      if (result && !Guid.isEmpty(result)) {
+        this.router.navigate(['order', result])
+      } else {
+        this.errorMessage = "We are sorry, we can not make the coffee you requested because one or more ingredients from it is out of stock.";
       }
     });
   }
