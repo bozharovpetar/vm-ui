@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Guid } from 'guid-string';
 import { CoffeeLookupDto } from 'src/app/shared/models/coffee.models';

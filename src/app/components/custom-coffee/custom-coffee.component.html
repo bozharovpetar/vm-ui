@@ -10,13 +10,11 @@
                         {{item.title}}
                     </mat-card-title>
                     <mat-card-content>
-                        <!-- Insert content here: -->
                         <!-- Left in stock -->
                         {{item.leftInStock}}
-                        <!-- Price -->
                     </mat-card-content>
                     <mat-card-actions>
-                        <!-- Pick said coffee -->
+                        <!-- Pick coffee -->
                         <button [disabled]="item.leftInStock == 0" mat-raised-button color="accent" (click)="selectItem(item)">PICK</button>
                     </mat-card-actions>
                 </mat-card>
@@ -38,7 +36,7 @@
                         <span>Price: {{totalPrice}}</span>
                     </mat-card-content>
                     <mat-card-actions>
-                        <!-- Order said coffee -->
+                        <!-- Order coffee -->
                         <button mat-raised-button color="accent" (click)="orderCustomCoffee()">ORDER</button>
                         <button mat-raised-button color="warn" (click)="resetSelection()">RESET SELECTION</button>
                     </mat-card-actions>
